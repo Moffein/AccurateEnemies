@@ -36,10 +36,13 @@ namespace AccurateEnemies
                     Vector3 lateralVelocity = new Vector3(targetVelocity.x, 0f, targetVelocity.z);
                     Vector3 futurePosition = targetPosition + lateralVelocity * timeToImpact;
 
-                    //point + vt + 0.5at^2
-                    if (targetVelocity.y > 0f)
+                    //Only attempt prediction if player is jumping upwards.
+                    //Predicting downwards movement leads to groundshots.
+                    if (targetBody.characterMotor && !targetBody.characterMotor.isGrounded && targetVelocity.y > 0f)
                     {
-                        float futureY = targetPosition.y + targetVelocity.y * timeToImpact + 0.5f * Physics.gravity.y * timeToImpact * timeToImpact;
+                        //point + vt + 0.5at^2
+                        float futureY = targetPosition.y + targetVelocity.y * timeToImpact;
+                        futureY += 0.5f * Physics.gravity.y * timeToImpact * timeToImpact;
                         futurePosition.y = futureY;
                     }
 
