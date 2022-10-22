@@ -6,6 +6,7 @@ using System.Linq;
 using RoR2.CharacterAI;
 using RoR2.Projectile;
 using System.Runtime.CompilerServices;
+using AccurateEnemies.Hooks;
 
 namespace AccurateEnemies
 {
@@ -29,7 +30,7 @@ namespace AccurateEnemies
             RoR2.RoR2Application.onLoad += InfernoCompat;
         }
 
-        public void InfernoCompat()
+        private void InfernoCompat()
         {
             if (InfernoLoaded)
             {
@@ -40,6 +41,24 @@ namespace AccurateEnemies
         private void ReadConfig()
         {
             hardmodeOnly = Config.Bind("Gameplay", "Restrict to Hard Difficulties", false, "Changes only apply on Monsoon and above.").Value;
+
+            string enemyString = "Enable projectile prediction.";
+            BeetleGuard.enabled = Config.Bind("Enemies", "Beetle Guard", true, enemyString).Value;
+            Bronzong.enabled = Config.Bind("Enemies", "Brass Contraption", true, enemyString).Value;
+            ClayBoss.enabled = Config.Bind("Enemies", "Clay Dunestrider", true, enemyString).Value;
+            ClayGrenadier.enabled = Config.Bind("Enemies", "Clay Apothecary", true, enemyString).Value;
+            FlyingVermin.enabled = Config.Bind("Enemies", "Blind Pest", true, enemyString).Value;
+            GreaterWisp.enabled = Config.Bind("Enemies", "Greater Wisp/Archaic Wisp", true, enemyString).Value;
+            Grovetender.enabled = Config.Bind("Enemies", "Grovetender", true, enemyString).Value;
+            Lemurian.enabled = Config.Bind("Enemies", "Lemurian", true, enemyString).Value;
+            LemurianBruiser.enabled = Config.Bind("Enemies", "Elder Lemurian", true, enemyString).Value;
+            LunarExploder.enabled = Config.Bind("Enemies", "Lunar Exploder", true, enemyString).Value;
+            MinorConstruct.enabled = Config.Bind("Enemies", "Alpha Construct", true, enemyString).Value;
+            RoboBallBoss.enabled = Config.Bind("Enemies", "Solus Control Unit/Alloy Worship Unit", true, enemyString).Value;
+            Scavenger.enabled = Config.Bind("Enemies", "Scavenger", true, enemyString).Value;
+            Vagrant.enabled = Config.Bind("Enemies", "Wandering Vagrant", true, enemyString).Value;
+            VoidJailer.enabled = Config.Bind("Enemies", "Void Jailer", true, enemyString).Value;
+            Vulture.enabled = Config.Bind("Enemies", "Alloy Vulture", true, enemyString).Value;
         }
 
         private void RunHooks()

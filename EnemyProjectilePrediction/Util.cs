@@ -5,7 +5,7 @@ using RoR2.CharacterAI;
 using RoR2.Projectile;
 namespace AccurateEnemies
 {
-    class Util
+    public class Util
     {
         public static Ray PredictAimray(Ray aimRay, TeamIndex attackerTeam, float maxTargetAngle, float projectileSpeed, HurtBox targetHurtBox)
         {
