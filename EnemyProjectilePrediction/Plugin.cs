@@ -51,7 +51,6 @@ namespace AccurateEnemies
             Hooks.BeetleGuard.Init();
             Hooks.ClayGrenadier.Init();
             Hooks.LemurianBruiser.Init();
-            Hooks.LunarWisp.Init();
             Hooks.Scavenger.Init();
             Hooks.Vagrant.Init();   //Slight improvement over vanilla, but still lags behind. Probably because projectile is too slow.
             Hooks.VoidJailer.Init();
@@ -62,6 +61,7 @@ namespace AccurateEnemies
             Hooks.MinorConstruct.Init();
             Hooks.LunarExploder.Init();
 
+            //LunarWisp has built-in homing
             //Grandparent rock throw is irrelevant
             //LunarGolem doesnt seem to work
             //MiniMushrum has built-in aiming
