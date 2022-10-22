@@ -11,7 +11,7 @@ using AccurateEnemies.Hooks;
 namespace AccurateEnemies
 {
     [BepInDependency("com.Moffein.RiskyArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.0")]
+    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.1")]
     public class AccurateEnemiesPlugin : BaseUnityPlugin
     {
         public static bool InfernoLoaded = false;
