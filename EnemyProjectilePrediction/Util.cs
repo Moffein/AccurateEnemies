@@ -32,13 +32,21 @@ namespace AccurateEnemies
                     Vector3 currentDistance = targetPosition - aimRay.origin;
                     float timeToImpact = currentDistance.magnitude / projectileSpeed;
 
-                    Vector3 estimatedFuturePosition = targetPosition + targetVelocity * timeToImpact;
-                    estimatedFuturePosition.y = targetPosition.y;   //Vertical movenent isn't predicted well by this, so just use the target's current Y
+                    //Vertical movenent isn't predicted well by this, so just use the target's current Y
+                    Vector3 lateralVelocity = new Vector3(targetVelocity.x, 0f, targetVelocity.z);
+                    Vector3 futurePosition = targetPosition + lateralVelocity * timeToImpact;
+
+                    //point + vt + 0.5at^2
+                    if (targetVelocity.y > 0f)
+                    {
+                        float futureY = targetPosition.y + targetVelocity.y * timeToImpact + 0.5f * Physics.gravity.y * timeToImpact * timeToImpact;
+                        futurePosition.y = futureY;
+                    }
 
                     Ray newAimray = new Ray
                     {
                         origin = aimRay.origin,
-                        direction = (estimatedFuturePosition - aimRay.origin).normalized
+                        direction = (futurePosition - aimRay.origin).normalized
                     };
 
                     float angleBetweenVectors = Vector3.Angle(aimRay.direction, newAimray.direction);
