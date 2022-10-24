@@ -26,7 +26,7 @@ namespace AccurateEnemies
                 Vector3 targetPosition = targetHurtBox.transform.position;
                 Vector3 targetVelocity = targetBody.characterMotor.velocity;
 
-                if (targetVelocity.sqrMagnitude > 0f)   //Dont bother predicting stationary targets
+                if (targetVelocity.sqrMagnitude > 0f && !(targetBody && targetBody.hasCloakBuff))   //Dont bother predicting stationary targets
                 {
                     //A very simplified way of estimating, won't be 100% accurate.
                     Vector3 currentDistance = targetPosition - aimRay.origin;

@@ -11,7 +11,7 @@ using AccurateEnemies.Hooks;
 namespace AccurateEnemies
 {
     [BepInDependency("com.Moffein.RiskyArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.2")]
+    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.4")]
     public class AccurateEnemiesPlugin : BaseUnityPlugin
     {
         public static bool InfernoLoaded = false;
@@ -43,6 +43,8 @@ namespace AccurateEnemies
             hardmodeOnly = Config.Bind("Gameplay", "Restrict to Hard Difficulties", false, "Changes only apply on Monsoon and above.").Value;
 
             string enemyString = "Enable projectile prediction.";
+            string loopString = "Only use projectile prediction after looping.";
+
             BeetleGuard.enabled = Config.Bind("Enemies", "Beetle Guard", true, enemyString).Value;
             Bronzong.enabled = Config.Bind("Enemies", "Brass Contraption", true, enemyString).Value;
             ClayBoss.enabled = Config.Bind("Enemies", "Clay Dunestrider", true, enemyString).Value;
@@ -59,6 +61,23 @@ namespace AccurateEnemies
             Vagrant.enabled = Config.Bind("Enemies", "Wandering Vagrant", true, enemyString).Value;
             VoidJailer.enabled = Config.Bind("Enemies", "Void Jailer", true, enemyString).Value;
             Vulture.enabled = Config.Bind("Enemies", "Alloy Vulture", true, enemyString).Value;
+
+            BeetleGuard.loopOnly = Config.Bind("Enemies", "Beetle Guard - Loop Only", false, loopString).Value;
+            Bronzong.loopOnly = Config.Bind("Enemies", "Brass Contraption - Loop Only", false, loopString).Value;
+            ClayBoss.loopOnly = Config.Bind("Enemies", "Clay Dunestrider - Loop Only", false, loopString).Value;
+            ClayGrenadier.loopOnly = Config.Bind("Enemies", "Clay Apothecary - Loop Only", false, loopString).Value;
+            FlyingVermin.loopOnly = Config.Bind("Enemies", "Blind Pest - Loop Only", true, loopString).Value;
+            GreaterWisp.loopOnly = Config.Bind("Enemies", "Greater Wisp/Archaic Wisp - Loop Only", false, loopString).Value;
+            Grovetender.loopOnly = Config.Bind("Enemies", "Grovetender - Loop Only", false, loopString).Value;
+            Lemurian.loopOnly = Config.Bind("Enemies", "Lemurian - Loop Only", true, loopString).Value;
+            LemurianBruiser.loopOnly = Config.Bind("Enemies", "Elder Lemurian - Loop Only", false, loopString).Value;
+            LunarExploder.loopOnly = Config.Bind("Enemies", "Lunar Exploder - Loop Only", false, loopString).Value;
+            MinorConstruct.loopOnly = Config.Bind("Enemies", "Alpha Construct - Loop Only", false, loopString).Value;
+            RoboBallBoss.loopOnly = Config.Bind("Enemies", "Solus Control Unit/Alloy Worship Unit - Loop Only", false, loopString).Value;
+            Scavenger.loopOnly = Config.Bind("Enemies", "Scavenger - Loop Only", false, loopString).Value;
+            Vagrant.loopOnly = Config.Bind("Enemies", "Wandering Vagrant - Loop Only", false, loopString).Value;
+            VoidJailer.loopOnly = Config.Bind("Enemies", "Void Jailer - Loop Only", false, loopString).Value;
+            Vulture.loopOnly = Config.Bind("Enemies", "Alloy Vulture - Loop Only", false, loopString).Value;
         }
 
         private void RunHooks()

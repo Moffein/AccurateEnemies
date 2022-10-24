@@ -9,6 +9,7 @@ namespace AccurateEnemies.Hooks
     public class FlyingVermin
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -27,7 +28,7 @@ namespace AccurateEnemies.Hooks
                     {
                         if (self.GetType() == typeof(EntityStates.FlyingVermin.Weapon.Spit))
                         {
-                            if (self.characterBody && !self.characterBody.isPlayerControlled)
+                            if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
                             {
                                 HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
                                 Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, self.projectilePrefab, targetHurtbox);

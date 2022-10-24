@@ -9,6 +9,7 @@ namespace AccurateEnemies.Hooks
     public class BeetleGuard
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -25,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.BeetleGuardMonster.FireSunder, Ray>>((aimRay, self) =>
                     {
-                        if (self.characterBody && !self.characterBody.isPlayerControlled)
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
                         {
                             aimRay.origin = self.handRTransform.position;//Called in Vanilla method, but  call here beforehand before calculating the new aimray.
                             HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);

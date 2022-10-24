@@ -9,6 +9,7 @@ namespace AccurateEnemies.Hooks
     public class GreaterWisp
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -25,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.GreaterWispMonster.FireCannons, Ray>>((aimRay, self) =>
                     {
-                        if (self.characterBody && !self.characterBody.isPlayerControlled)
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
                         {
                             HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
                             Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, self.projectilePrefab, targetHurtbox);

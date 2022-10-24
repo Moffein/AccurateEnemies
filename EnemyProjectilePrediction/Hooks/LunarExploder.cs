@@ -9,6 +9,7 @@ namespace AccurateEnemies.Hooks
     public class LunarExploder
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -25,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.GenericProjectileBaseState, Ray>>((aimRay, self) =>
                     {
-                        if (self.GetType() == typeof(EntityStates.LunarExploderMonster.Weapon.FireExploderShards))
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.GetType() == typeof(EntityStates.LunarExploderMonster.Weapon.FireExploderShards))
                         {
                             if (self.characterBody && !self.characterBody.isPlayerControlled)
                             {

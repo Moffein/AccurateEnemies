@@ -10,6 +10,7 @@ namespace AccurateEnemies.Hooks
     public class ClayGrenadier
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -18,9 +19,13 @@ namespace AccurateEnemies.Hooks
 
             On.EntityStates.ClayGrenadier.ThrowBarrel.ModifyProjectileAimRay += (orig, self, aimRay) =>
             {
-                HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
-                Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, self.projectilePrefab, targetHurtbox);
-                return orig(self, newAimRay);
+                if (!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5))
+                {
+                    HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
+                    Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, self.projectilePrefab, targetHurtbox);
+                    return orig(self, newAimRay);
+                }
+                return orig(self, aimRay);
             };
         }
     }

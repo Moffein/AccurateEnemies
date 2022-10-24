@@ -9,6 +9,7 @@ namespace AccurateEnemies.Hooks
     public class Bronzong
     {
         public static bool enabled = true;
+        public static bool loopOnly = false;
         private static bool initialized = false;
         public static void Init()
         {
@@ -25,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.Bell.BellWeapon.ChargeTrioBomb, Ray>>((aimRay, self) =>
                     {
-                        if (self.characterBody && !self.characterBody.isPlayerControlled)
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
                         {
                             //Uncomment this to improve accuracy further.
                             /*Transform t = self.FindTargetChildTransformFromBombIndex();
