@@ -26,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.Vulture.Weapon.FireWindblade, Ray>>((aimRay, self) =>
                     {
-                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled && (!AccurateEnemiesPlugin.eliteOnly || self.characterBody.isElite))
                         {
                             HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
                             Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, EntityStates.Vulture.Weapon.FireWindblade.projectilePrefab, targetHurtbox);

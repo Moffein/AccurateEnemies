@@ -10,8 +10,9 @@ using AccurateEnemies.Hooks;
 
 namespace AccurateEnemies
 {
+    [BepInDependency("HIFU.Inferno", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.RiskyArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.4")]
+    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.8")]
     public class AccurateEnemiesPlugin : BaseUnityPlugin
     {
         public static bool InfernoLoaded = false;
@@ -20,6 +21,7 @@ namespace AccurateEnemies
 
         public static float basePredictionAngle = 45f;
         public static bool hardmodeOnly = false;
+        public static bool eliteOnly = false;
 
         public void Awake()
         {
@@ -41,6 +43,7 @@ namespace AccurateEnemies
         private void ReadConfig()
         {
             hardmodeOnly = Config.Bind("Gameplay", "Restrict to Hard Difficulties", false, "Changes only apply on Monsoon and above.").Value;
+            eliteOnly = Config.Bind("Gameplay", "Elite Only", true, "Only apply changes to Elite enemies.").Value;
 
             string enemyString = "Enable projectile prediction.";
             string loopString = "Only use projectile prediction after looping.";
@@ -66,10 +69,10 @@ namespace AccurateEnemies
             Bronzong.loopOnly = Config.Bind("Enemies", "Brass Contraption - Loop Only", false, loopString).Value;
             ClayBoss.loopOnly = Config.Bind("Enemies", "Clay Dunestrider - Loop Only", false, loopString).Value;
             ClayGrenadier.loopOnly = Config.Bind("Enemies", "Clay Apothecary - Loop Only", false, loopString).Value;
-            FlyingVermin.loopOnly = Config.Bind("Enemies", "Blind Pest - Loop Only", true, loopString).Value;
+            FlyingVermin.loopOnly = Config.Bind("Enemies", "Blind Pest - Loop Only", false, loopString).Value;
             GreaterWisp.loopOnly = Config.Bind("Enemies", "Greater Wisp/Archaic Wisp - Loop Only", false, loopString).Value;
             Grovetender.loopOnly = Config.Bind("Enemies", "Grovetender - Loop Only", false, loopString).Value;
-            Lemurian.loopOnly = Config.Bind("Enemies", "Lemurian - Loop Only", true, loopString).Value;
+            Lemurian.loopOnly = Config.Bind("Enemies", "Lemurian - Loop Only", false, loopString).Value;
             LemurianBruiser.loopOnly = Config.Bind("Enemies", "Elder Lemurian - Loop Only", false, loopString).Value;
             LunarExploder.loopOnly = Config.Bind("Enemies", "Lunar Exploder - Loop Only", false, loopString).Value;
             MinorConstruct.loopOnly = Config.Bind("Enemies", "Alpha Construct - Loop Only", false, loopString).Value;

@@ -9,18 +9,27 @@ namespace AccurateEnemies
     {
         public static Ray PredictAimray(Ray aimRay, TeamIndex attackerTeam, float maxTargetAngle, float projectileSpeed, HurtBox targetHurtBox)
         {
+            bool skip = false;
             if (AccurateEnemiesPlugin.hardmodeOnly && Run.instance)
             {
                 DifficultyDef df = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
                 if (df != null && !df.countsAsHardMode)
                 {
-                    return aimRay;
+                    skip = true;
                 }
             }
 
-            if (targetHurtBox == null) targetHurtBox = AcquireTarget(aimRay, attackerTeam, maxTargetAngle);
+            bool hasHurtbox = false;
+            if (!skip)
+            {
+                if (targetHurtBox == null)
+                {
+                    targetHurtBox = AcquireTarget(aimRay, attackerTeam, maxTargetAngle);
+                }
+                hasHurtbox = targetHurtBox && targetHurtBox.healthComponent && targetHurtBox.healthComponent.body && targetHurtBox.healthComponent.body.characterMotor;
+            }
 
-            if (projectileSpeed > 0f && targetHurtBox && targetHurtBox.healthComponent && targetHurtBox.healthComponent.body && targetHurtBox.healthComponent.body.characterMotor)
+            if (!skip && hasHurtbox && projectileSpeed > 0f)
             {
                 CharacterBody targetBody = targetHurtBox.healthComponent.body;
                 Vector3 targetPosition = targetHurtBox.transform.position;

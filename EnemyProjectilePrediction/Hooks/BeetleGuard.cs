@@ -26,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.BeetleGuardMonster.FireSunder, Ray>>((aimRay, self) =>
                     {
-                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled)
+                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled && (!AccurateEnemiesPlugin.eliteOnly || self.characterBody.isElite))
                         {
                             aimRay.origin = self.handRTransform.position;//Called in Vanilla method, but  call here beforehand before calculating the new aimray.
                             HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
