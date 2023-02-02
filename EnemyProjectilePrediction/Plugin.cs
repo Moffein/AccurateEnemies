@@ -12,7 +12,7 @@ namespace AccurateEnemies
 {
     [BepInDependency("HIFU.Inferno", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.RiskyArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.8")]
+    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.9")]
     public class AccurateEnemiesPlugin : BaseUnityPlugin
     {
         public static bool InfernoLoaded = false;
@@ -22,6 +22,7 @@ namespace AccurateEnemies
         public static float basePredictionAngle = 45f;
         public static bool hardmodeOnly = false;
         public static bool eliteOnly = false;
+        public static bool alwaysAllowBosses = true;
 
         public void Awake()
         {
@@ -44,6 +45,7 @@ namespace AccurateEnemies
         {
             hardmodeOnly = Config.Bind("Gameplay", "Restrict to Hard Difficulties", false, "Changes only apply on Monsoon and above.").Value;
             eliteOnly = Config.Bind("Gameplay", "Elite Only", true, "Only apply changes to Elite enemies.").Value;
+            alwaysAllowBosses = Config.Bind("Gameplay", "Always Allow Champions", true, "Always enable changes on champion-tier (boss) enemies.").Value;
 
             string enemyString = "Enable projectile prediction.";
             string loopString = "Only use projectile prediction after looping.";
