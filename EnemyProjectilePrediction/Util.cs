@@ -44,7 +44,14 @@ namespace AccurateEnemies
             {
                 CharacterBody targetBody = targetHurtBox.healthComponent.body;
                 Vector3 targetPosition = targetHurtBox.transform.position;
+
+                //Velocity shows up as 0 for clients due to not having authority over the CharacterMotor
                 Vector3 targetVelocity = targetBody.characterMotor.velocity;
+                if (!targetBody.hasAuthority)
+                {
+                    //Less accurate, but it works online.
+                    targetVelocity = (targetBody.transform.position - targetBody.previousPosition) / Time.fixedDeltaTime;
+                }
 
                 if (targetVelocity.sqrMagnitude > 0f && !(targetBody && targetBody.hasCloakBuff))   //Dont bother predicting stationary targets
                 {
