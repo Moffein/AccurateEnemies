@@ -26,7 +26,7 @@ namespace AccurateEnemies.Hooks
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<Ray, EntityStates.Bell.BellWeapon.ChargeTrioBomb, Ray>>((aimRay, self) =>
                     {
-                        if ((!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5)) && self.characterBody && !self.characterBody.isPlayerControlled && (!AccurateEnemiesPlugin.eliteOnly || self.characterBody.isElite))
+                        if (Util.AllowPrediction(self.characterBody, loopOnly))
                         {
                             //Uncomment this to improve accuracy further.
                             /*Transform t = self.FindTargetChildTransformFromBombIndex();

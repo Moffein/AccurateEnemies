@@ -7,29 +7,40 @@ namespace AccurateEnemies
 {
     public class Util
     {
-        public static Ray PredictAimray(Ray aimRay, TeamIndex attackerTeam, float maxTargetAngle, float projectileSpeed, HurtBox targetHurtBox)
+        public static bool AllowPrediction(CharacterBody body, bool loopOnly)
         {
-            bool skip = false;
             if (AccurateEnemiesPlugin.hardmodeOnly && Run.instance)
             {
                 DifficultyDef df = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
                 if (df != null && !df.countsAsHardMode)
                 {
-                    skip = true;
+                    return false;
                 }
             }
 
-            bool hasHurtbox = false;
-            if (!skip)
+            //Check this first, since it should skip other checks.
+            if (AccurateEnemiesPlugin.alwaysAllowBosses && body && body.isChampion) return true;
+
+            if (loopOnly && Run.instance && Run.instance.stageClearCount < 5) return false;
+            if (body)
             {
-                if (targetHurtBox == null)
-                {
-                    targetHurtBox = AcquireTarget(aimRay, attackerTeam, maxTargetAngle);
-                }
-                hasHurtbox = targetHurtBox && targetHurtBox.healthComponent && targetHurtBox.healthComponent.body && targetHurtBox.healthComponent.body.characterMotor;
+                if (body.isPlayerControlled) return false;
+                if (AccurateEnemiesPlugin.eliteOnly && !body.isElite) return false;
             }
 
-            if (!skip && hasHurtbox && projectileSpeed > 0f)
+            return true;
+        }
+
+        public static Ray PredictAimray(Ray aimRay, TeamIndex attackerTeam, float maxTargetAngle, float projectileSpeed, HurtBox targetHurtBox)
+        {
+            bool hasHurtbox = false;
+            if (targetHurtBox == null)
+            {
+                targetHurtBox = AcquireTarget(aimRay, attackerTeam, maxTargetAngle);
+            }
+            hasHurtbox = targetHurtBox && targetHurtBox.healthComponent && targetHurtBox.healthComponent.body && targetHurtBox.healthComponent.body.characterMotor;
+
+            if (hasHurtbox && projectileSpeed > 0f)
             {
                 CharacterBody targetBody = targetHurtBox.healthComponent.body;
                 Vector3 targetPosition = targetHurtBox.transform.position;

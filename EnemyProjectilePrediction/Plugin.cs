@@ -12,7 +12,7 @@ namespace AccurateEnemies
 {
     [BepInDependency("HIFU.Inferno", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.RiskyArtifacts", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.0.9")]
+    [BepInPlugin("com.Moffein.AccurateEnemies", "Accurate Enemies", "1.1.0")]
     public class AccurateEnemiesPlugin : BaseUnityPlugin
     {
         public static bool InfernoLoaded = false;

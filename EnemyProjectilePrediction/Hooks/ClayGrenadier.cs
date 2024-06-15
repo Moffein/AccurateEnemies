@@ -19,7 +19,7 @@ namespace AccurateEnemies.Hooks
 
             On.EntityStates.ClayGrenadier.ThrowBarrel.ModifyProjectileAimRay += (orig, self, aimRay) =>
             {
-                if (!loopOnly || (Run.instance && Run.instance.stageClearCount >= 5) && self.characterBody && (!AccurateEnemiesPlugin.eliteOnly || self.characterBody.isElite))
+                if (Util.AllowPrediction(self.characterBody, loopOnly))
                 {
                     HurtBox targetHurtbox = Util.GetMasterAITargetHurtbox(self.characterBody.master);
                     Ray newAimRay = Util.PredictAimrayPS(aimRay, self.GetTeam(), AccurateEnemiesPlugin.basePredictionAngle, self.projectilePrefab, targetHurtbox);
